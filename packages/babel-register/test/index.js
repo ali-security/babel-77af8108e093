@@ -407,6 +407,10 @@ function spawnNodeAsync(args, cwd = __dirname, env) {
     cwd,
     env: {
       ...env,
+      // The child gets a minimal env, so the workflow-level
+      // BROWSERSLIST_IGNORE_OLD_DATA does not reach it; without it the stale
+      // caniuse-lite warning lands in the captured output.
+      BROWSERSLIST_IGNORE_OLD_DATA: "1",
       ...(process.env.BABEL_8_BREAKING && {
         BABEL_8_BREAKING: process.env.BABEL_8_BREAKING,
       }),
